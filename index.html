@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid 转换工具</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px; /* Increased top/bottom padding */
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a); /* Dark gradient background */
+            color: #e0e0e0; /* Light text color */
+            min-height: 100vh;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-bottom: 10px; /* Add some space below headings */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px; /* Increased gap */
+            background-color: rgba(40, 40, 40, 0.6); /* Semi-transparent dark background */
+            padding: 30px; /* Increased padding */
+            border-radius: 15px; /* More rounded corners */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Softer shadow */
+            backdrop-filter: blur(10px); /* Glassmorphism blur */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border */
+        }
+
+        .input-section, .preview-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Increased gap */
+            /* Add some inner glass effect if needed, or keep it simple */
+            background-color: rgba(50, 50, 50, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 350px; /* Increased height */
+            padding: 15px; /* Increased padding */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
+            border-radius: 8px; /* More rounded */
+            resize: vertical;
+            font-family: 'Fira Code', monospace; /* Use a common monospace font */
+            background-color: rgba(0, 0, 0, 0.3); /* Darker transparent background */
+            color: #f0f0f0; /* Light text */
+            outline: none; /* Remove default outline */
+        }
+
+        textarea:focus {
+            border-color: rgba(255, 255, 255, 0.5); /* Highlight border on focus */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-container {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 350px; /* Match textarea height */
+            background-color: rgba(0, 0, 0, 0.2); /* Slightly transparent background */
+            display: flex; /* Center content */
+            justify-content: center;
+            align-items: center;
+            overflow: auto; /* Add scroll if content overflows */
+        }
+
+        /* Style for the rendered Mermaid SVG */
+        .preview-container .mermaid svg {
+             max-width: 100%;
+             height: auto;
+        }
+
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            gap: 15px; /* Increased gap */
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 10px 20px; /* Increased padding */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1); /* Glassy background */
+            color: #e0e0e0; /* Light text */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            font-weight: 500; /* Slightly bolder text */
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Lighter on hover */
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98); /* Click effect */
+        }
+
+        .download-section {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-grow: 1; /* Allow it to take available space */
+        }
+
+        input[type="text"] {
+            padding: 10px 15px; /* Increased padding */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #f0f0f0;
+            flex-grow: 1; /* Take available space */
+            outline: none;
+        }
+
+         input[type="text"]:focus {
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        }
+
+        .error-message {
+            color: #ff6b6b; /* Brighter red for dark theme */
+            background-color: rgba(255, 107, 107, 0.1); /* Subtle red background */
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 10px; /* Add some margin */
+            display: none; /* Keep hidden initially */
+        }
+
+        /* Fullscreen Preview Styles */
+        #fullscreenPreview {
+            background-color: rgba(10, 10, 10, 0.95); /* Darker overlay */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        #zoomControls {
+            background-color: rgba(60, 60, 60, 0.75); /* Slightly adjusted background for better contrast */
+            padding: 12px 18px; /* Slightly increased padding */
+            border-radius: 10px; /* Slightly more rounded */
+            border: 1px solid rgba(255, 255, 255, 0.25); /* More visible border */
+            backdrop-filter: blur(10px); /* Increased blur */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        #zoomControls button {
+            background-color: rgba(80, 80, 80, 0.5); /* Darker button background */
+            color: #f0f0f0; /* Brighter text */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* More visible button border */
+            min-width: 45px; /* Slightly larger buttons */
+            padding: 8px 12px; /* Adjust padding */
+            border-radius: 6px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        #zoomControls button:hover {
+            background-color: rgba(100, 100, 100, 0.6); /* Lighter hover */
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+         #zoomControls button:active {
+            background-color: rgba(70, 70, 70, 0.6); /* Click feedback */
+            transform: scale(0.97);
+        }
+
+        #closeFullscreenBtn {
+            background-color: rgba(255, 80, 80, 0.6) !important; /* Brighter, slightly less transparent red */
+            border-color: rgba(255, 100, 100, 0.7) !important;
+            color: #ffffff !important; /* Ensure text is white */
+        }
+
+        #closeFullscreenBtn:hover {
+             background-color: rgba(255, 100, 100, 0.75) !important; /* Brighter red hover */
+             border-color: rgba(255, 120, 120, 0.8) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <h2>Mermaid 代码输入</h2>
+            <textarea id="mermaidInput" placeholder="在此输入Mermaid代码...">graph TD
+    A[开始] --> B{判断}
+    B -->|是| C[处理1]
+    B -->|否| D[处理2]
+    C --> E[结束]
+    D --> E</textarea>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+        <div class="preview-section">
+            <h2>预览</h2>
+            <div class="preview-container" id="preview"></div>
+            <div class="button-group">
+                <button onclick="copyImage()">复制图像</button>
+                <div class="download-section">
+                    <input type="text" id="fileName" placeholder="输入文件名" value="mermaid-diagram">
+                    <button onclick="downloadImage()">下载图像</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Preview Container -->
+    <div id="fullscreenPreview" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); z-index: 1000; overflow: hidden; justify-content: center; align-items: center;">
+        <div id="fullscreenContent" style="position: relative; width: 90%; height: 90%; display: flex; justify-content: center; align-items: center;">
+            <!-- SVG will be injected here -->
+        </div>
+        <div id="zoomControls" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; display: flex; gap: 10px;">
+            <button id="zoomInBtn">+</button>
+            <button id="zoomOutBtn">-</button>
+            <button id="resetZoomBtn">重置</button>
+            <button id="closeFullscreenBtn" style="background-color: #f44336;">关闭</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
