@@ -1,18 +1,40 @@
+// 全局变量，用于跟踪当前主题
+let currentTheme = 'dark';
+
 // 初始化mermaid配置
-mermaid.initialize({
-    startOnLoad: false,
-    theme: 'dark', // Apply dark theme to Mermaid diagrams
-    securityLevel: 'loose',
-    // Optional: Define a custom dark theme if needed
-    // themeVariables: {
-    //     darkMode: true,
-    //     background: '#1a1a1a', // Match body background or choose another dark shade
-    //     primaryColor: '#333', // Darker nodes
-    //     primaryTextColor: '#e0e0e0',
-    //     lineColor: '#aaa',
-    //     fontSize: '16px'
-    // }
-});
+function initializeMermaid(theme) {
+    const config = {
+        startOnLoad: false,
+        theme: theme, // 使用传入的主题
+        securityLevel: 'loose'
+    };
+    
+    // 可选：为深色和浅色主题定义自定义变量
+    if (theme === 'dark') {
+        config.themeVariables = {
+            darkMode: true,
+            background: '#1a1a1a',
+            primaryColor: '#333',
+            primaryTextColor: '#e0e0e0',
+            lineColor: '#aaa',
+            fontSize: '16px'
+        };
+    } else {
+        config.themeVariables = {
+            darkMode: false,
+            background: '#f8f9fa',
+            primaryColor: '#e9ecef',
+            primaryTextColor: '#333',
+            lineColor: '#666',
+            fontSize: '16px'
+        };
+    }
+    
+    mermaid.initialize(config);
+}
+
+// 初始化默认主题
+initializeMermaid(currentTheme);
 
 // 定义Mermaid语法高亮模式
 CodeMirror.defineSimpleMode("mermaid", {
@@ -91,7 +113,43 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 渲染初始图表
     renderMermaid();
+
+    // --- 主题切换逻辑 ---
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleTheme);
+    } else {
+        console.error("Theme toggle button not found!");
+    }
+    // 根据初始主题设置按钮图标
+    updateThemeToggleButton(); 
 });
+
+// 切换主题函数
+function toggleTheme() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.body.classList.toggle('dark-theme');
+    document.body.classList.toggle('light-theme');
+    
+    // 更新CodeMirror主题
+    editor.setOption("theme", currentTheme === 'dark' ? 'mermaid-dark' : 'mermaid-light');
+    
+    // 重新初始化Mermaid并渲染
+    initializeMermaid(currentTheme);
+    renderMermaid(); // 重新渲染以应用新主题
+    
+    // 更新按钮图标
+    updateThemeToggleButton();
+}
+
+// 更新主题切换按钮的图标
+function updateThemeToggleButton() {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+        themeToggleBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌓'; // Sun for light, Moon for dark
+        themeToggleBtn.title = `切换到${currentTheme === 'dark' ? '浅色' : '深色'}主题`;
+    }
+}
 
 // 渲染Mermaid图表
 async function renderMermaid() {
@@ -306,8 +364,8 @@ async function copyImage() {
         // 应用缩放
         ctx.scale(scaleFactor, scaleFactor);
 
-        // 3. 填充背景色 (Use dark background matching the theme)
-        ctx.fillStyle = '#1a1a1a';
+        // 3. 填充背景色 (根据当前主题使用匹配的背景色)
+        ctx.fillStyle = currentTheme === 'dark' ? '#1a1a1a' : '#f8f9fa';
         ctx.fillRect(0, 0, canvasWidth / scaleFactor, canvasHeight / scaleFactor);
 
         // 4. 将 SVG 转换为 Data URL
@@ -386,8 +444,8 @@ async function downloadImage() {
         // 应用缩放
         ctx.scale(scaleFactor, scaleFactor);
 
-        // 3. (可选) 填充背景色 (Use dark background matching the theme)
-        ctx.fillStyle = '#1a1a1a'; // 设置背景为深色
+        // 3. (可选) 填充背景色 (根据当前主题使用匹配的背景色)
+        ctx.fillStyle = currentTheme === 'dark' ? '#1a1a1a' : '#f8f9fa'; // 根据主题设置背景色
         // 注意：填充时使用未缩放的坐标和尺寸
         ctx.fillRect(0, 0, canvasWidth / scaleFactor, canvasHeight / scaleFactor);
 

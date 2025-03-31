@@ -1,32 +1,59 @@
-/* CodeMirror自定义样式 - 适配暗色主题 */
+/* 通用CodeMirror样式 */
 .CodeMirror {
     height: 350px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(0, 0, 0, 0.3);
-    color: #f0f0f0;
     font-family: 'Fira Code', monospace;
     line-height: 1.6;
     padding: 10px 0;
 }
 
-.CodeMirror:focus-within {
+/* 暗色主题样式 */
+body.dark-theme .CodeMirror {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #f0f0f0;
+}
+
+body.dark-theme .CodeMirror:focus-within {
     border-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
 }
 
-/* 行号样式 */
-.CodeMirror-gutters {
+/* 浅色主题样式 */
+body.light-theme .CodeMirror {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #333;
+}
+
+body.light-theme .CodeMirror:focus-within {
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 行号样式 - 暗色主题 */
+body.dark-theme .CodeMirror-gutters {
     background-color: rgba(0, 0, 0, 0.4);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     padding-right: 5px;
 }
 
-.CodeMirror-linenumber {
+body.dark-theme .CodeMirror-linenumber {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* 语法高亮样式 - 适配Mermaid语法 */
+/* 行号样式 - 浅色主题 */
+body.light-theme .CodeMirror-gutters {
+    background-color: rgba(240, 240, 240, 0.7);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    padding-right: 5px;
+}
+
+body.light-theme .CodeMirror-linenumber {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* 语法高亮样式 - 暗色主题 */
 .cm-s-mermaid-dark .cm-keyword {
     color: #ff79c6; /* 关键字，如graph, flowchart */
 }
@@ -59,24 +86,83 @@
     color: #ff5555; /* 错误 */
 }
 
-/* 当前行高亮 */
-.CodeMirror-activeline-background {
+/* 语法高亮样式 - 浅色主题 */
+.cm-s-mermaid-light .cm-keyword {
+    color: #d6438a; /* 关键字，如graph, flowchart */
+}
+
+.cm-s-mermaid-light .cm-def {
+    color: #0a8758; /* 定义，如节点ID */
+}
+
+.cm-s-mermaid-light .cm-variable {
+    color: #0086b3; /* 变量 */
+}
+
+.cm-s-mermaid-light .cm-operator {
+    color: #d6438a; /* 操作符，如--> */
+}
+
+.cm-s-mermaid-light .cm-string {
+    color: #a39c0e; /* 字符串 */
+}
+
+.cm-s-mermaid-light .cm-bracket {
+    color: #333; /* 括号 */
+}
+
+.cm-s-mermaid-light .cm-comment {
+    color: #6a737d; /* 注释 */
+}
+
+.cm-s-mermaid-light .cm-error {
+    color: #d73a49; /* 错误 */
+}
+
+/* 当前行高亮 - 暗色主题 */
+body.dark-theme .CodeMirror-activeline-background {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* 选中文本高亮 */
-.CodeMirror-selected {
+/* 当前行高亮 - 浅色主题 */
+body.light-theme .CodeMirror-activeline-background {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* 选中文本高亮 - 暗色主题 */
+body.dark-theme .CodeMirror-selected {
     background: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* 滚动条样式 */
-.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
+/* 选中文本高亮 - 浅色主题 */
+body.light-theme .CodeMirror-selected {
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 滚动条样式 - 暗色主题 */
+body.dark-theme .CodeMirror-simplescroll-horizontal div, 
+body.dark-theme .CodeMirror-simplescroll-vertical div {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     border: none;
 }
 
-.CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
+body.dark-theme .CodeMirror-simplescroll-horizontal, 
+body.dark-theme .CodeMirror-simplescroll-vertical {
     background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* 滚动条样式 - 浅色主题 */
+body.light-theme .CodeMirror-simplescroll-horizontal div, 
+body.light-theme .CodeMirror-simplescroll-vertical div {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: none;
+}
+
+body.light-theme .CodeMirror-simplescroll-horizontal, 
+body.light-theme .CodeMirror-simplescroll-vertical {
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 10px;
 }

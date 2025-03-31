@@ -29,68 +29,140 @@
             padding: 40px 20px; /* Increased top/bottom padding */
             max-width: 1200px;
             margin: 0 auto;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+        
+        /* 暗色主题 */
+        body.dark-theme {
             background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a); /* Dark gradient background */
             color: #e0e0e0; /* Light text color */
-            min-height: 100vh;
+        }
+        
+        /* 浅色主题 */
+        body.light-theme {
+            background: linear-gradient(to bottom right, #f0f4f8, #e0e8f0); /* Light gradient background */
+            color: #333; /* Dark text color */
         }
 
-        h2 {
+        /* 标题样式 - 暗色主题 */
+        body.dark-theme h2 {
             color: #ffffff;
-            margin-bottom: 10px; /* Add some space below headings */
+            margin-bottom: 10px;
+        }
+        
+        /* 标题样式 - 浅色主题 */
+        body.light-theme h2 {
+            color: #333;
+            margin-bottom: 10px;
         }
 
         .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px; /* Increased gap */
-            background-color: rgba(40, 40, 40, 0.6); /* Semi-transparent dark background */
             padding: 30px; /* Increased padding */
             border-radius: 15px; /* More rounded corners */
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Softer shadow */
             backdrop-filter: blur(10px); /* Glassmorphism blur */
             -webkit-backdrop-filter: blur(10px); /* Safari support */
+            transition: all 0.3s ease;
+        }
+        
+        /* 容器样式 - 暗色主题 */
+        body.dark-theme .container {
+            background-color: rgba(40, 40, 40, 0.6); /* Semi-transparent dark background */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Softer shadow */
             border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border */
+        }
+        
+        /* 容器样式 - 浅色主题 */
+        body.light-theme .container {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent light background */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            border: 1px solid rgba(0, 0, 0, 0.08); /* Subtle border */
         }
 
         .input-section, .preview-section {
             display: flex;
             flex-direction: column;
             gap: 15px; /* Increased gap */
-            /* Add some inner glass effect if needed, or keep it simple */
-            background-color: rgba(50, 50, 50, 0.5);
             padding: 20px;
             border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        /* 输入和预览区域 - 暗色主题 */
+        body.dark-theme .input-section, 
+        body.dark-theme .preview-section {
+            background-color: rgba(50, 50, 50, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 输入和预览区域 - 浅色主题 */
+        body.light-theme .input-section, 
+        body.light-theme .preview-section {
+            background-color: rgba(240, 240, 240, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         textarea {
             width: 100%;
             height: 350px; /* Increased height */
             padding: 15px; /* Increased padding */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
             border-radius: 8px; /* More rounded */
             resize: vertical;
             font-family: 'Fira Code', monospace; /* Use a common monospace font */
+            outline: none; /* Remove default outline */
+            transition: all 0.3s ease;
+        }
+        
+        /* 文本区域 - 暗色主题 */
+        body.dark-theme textarea {
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
             background-color: rgba(0, 0, 0, 0.3); /* Darker transparent background */
             color: #f0f0f0; /* Light text */
-            outline: none; /* Remove default outline */
+        }
+        
+        /* 文本区域 - 浅色主题 */
+        body.light-theme textarea {
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Darker border */
+            background-color: rgba(255, 255, 255, 0.7); /* Lighter transparent background */
+            color: #333; /* Dark text */
         }
 
-        textarea:focus {
+        /* 文本区域焦点 - 暗色主题 */
+        body.dark-theme textarea:focus {
             border-color: rgba(255, 255, 255, 0.5); /* Highlight border on focus */
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
         }
+        
+        /* 文本区域焦点 - 浅色主题 */
+        body.light-theme textarea:focus {
+            border-color: rgba(0, 0, 0, 0.3); /* Highlight border on focus */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
 
         .preview-container {
-            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             padding: 20px;
             min-height: 350px; /* Match textarea height */
-            background-color: rgba(0, 0, 0, 0.2); /* Slightly transparent background */
             display: flex; /* Center content */
             justify-content: center;
             align-items: center;
             overflow: auto; /* Add scroll if content overflows */
+            transition: all 0.3s ease;
+        }
+        
+        /* 预览容器 - 暗色主题 */
+        body.dark-theme .preview-container {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.2); /* Slightly transparent background */
+        }
+        
+        /* 预览容器 - 浅色主题 */
+        body.light-theme .preview-container {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: rgba(240, 240, 240, 0.5); /* Slightly transparent background */
         }
 
         /* Style for the rendered Mermaid SVG */
@@ -109,20 +181,38 @@
 
         button {
             padding: 10px 20px; /* Increased padding */
-            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.1); /* Glassy background */
-            color: #e0e0e0; /* Light text */
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
+            transition: background-color 0.3s, transform 0.1s, border-color 0.3s, color 0.3s;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             font-weight: 500; /* Slightly bolder text */
         }
+        
+        /* 按钮 - 暗色主题 */
+        body.dark-theme button {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1); /* Glassy background */
+            color: #e0e0e0; /* Light text */
+        }
+        
+        /* 按钮 - 浅色主题 */
+        body.light-theme button {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.05); /* Glassy background */
+            color: #333; /* Dark text */
+        }
 
-        button:hover {
+        /* 按钮悬停 - 暗色主题 */
+        body.dark-theme button:hover {
             background-color: rgba(255, 255, 255, 0.2); /* Lighter on hover */
             border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* 按钮悬停 - 浅色主题 */
+        body.light-theme button:hover {
+            background-color: rgba(0, 0, 0, 0.1); /* Darker on hover */
+            border-color: rgba(0, 0, 0, 0.2);
         }
 
         button:active {
@@ -138,60 +228,132 @@
 
         input[type="text"] {
             padding: 10px 15px; /* Increased padding */
-            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            background-color: rgba(0, 0, 0, 0.3);
-            color: #f0f0f0;
             flex-grow: 1; /* Take available space */
             outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        /* 文本输入 - 暗色主题 */
+        body.dark-theme input[type="text"] {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #f0f0f0;
+        }
+        
+        /* 文本输入 - 浅色主题 */
+        body.light-theme input[type="text"] {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #333;
         }
 
-         input[type="text"]:focus {
+        /* 文本输入焦点 - 暗色主题 */
+        body.dark-theme input[type="text"]:focus {
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
         }
+        
+        /* 文本输入焦点 - 浅色主题 */
+        body.light-theme input[type="text"]:focus {
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
 
+        /* 错误消息 */
         .error-message {
-            color: #ff6b6b; /* Brighter red for dark theme */
-            background-color: rgba(255, 107, 107, 0.1); /* Subtle red background */
-            border: 1px solid rgba(255, 107, 107, 0.3);
             padding: 10px;
             border-radius: 5px;
             font-size: 14px;
             margin-top: 10px; /* Add some margin */
             display: none; /* Keep hidden initially */
+            transition: all 0.3s ease;
+        }
+        
+        /* 错误消息 - 暗色主题 */
+        body.dark-theme .error-message {
+            color: #ff6b6b; /* Brighter red for dark theme */
+            background-color: rgba(255, 107, 107, 0.1); /* Subtle red background */
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        /* 错误消息 - 浅色主题 */
+        body.light-theme .error-message {
+            color: #d73a49; /* Darker red for light theme */
+            background-color: rgba(215, 58, 73, 0.05); /* Subtle red background */
+            border: 1px solid rgba(215, 58, 73, 0.2);
         }
 
         /* Fullscreen Preview Styles */
         #fullscreenPreview {
-            background-color: rgba(10, 10, 10, 0.95); /* Darker overlay */
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            transition: background-color 0.3s ease;
+        }
+        
+        /* 全屏预览 - 暗色主题 */
+        body.dark-theme #fullscreenPreview {
+            background-color: rgba(10, 10, 10, 0.95); /* Darker overlay */
+        }
+        
+        /* 全屏预览 - 浅色主题 */
+        body.light-theme #fullscreenPreview {
+            background-color: rgba(240, 240, 240, 0.95); /* Lighter overlay */
         }
 
         #zoomControls {
-            background-color: rgba(60, 60, 60, 0.75); /* Slightly adjusted background for better contrast */
             padding: 12px 18px; /* Slightly increased padding */
             border-radius: 10px; /* Slightly more rounded */
-            border: 1px solid rgba(255, 255, 255, 0.25); /* More visible border */
             backdrop-filter: blur(10px); /* Increased blur */
             -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        /* 缩放控制 - 暗色主题 */
+        body.dark-theme #zoomControls {
+            background-color: rgba(60, 60, 60, 0.75); /* Slightly adjusted background for better contrast */
+            border: 1px solid rgba(255, 255, 255, 0.25); /* More visible border */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+        
+        /* 缩放控制 - 浅色主题 */
+        body.light-theme #zoomControls {
+            background-color: rgba(220, 220, 220, 0.75); /* Light background */
+            border: 1px solid rgba(0, 0, 0, 0.15); /* Subtle border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
 
         #zoomControls button {
-            background-color: rgba(80, 80, 80, 0.5); /* Darker button background */
-            color: #f0f0f0; /* Brighter text */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* More visible button border */
             min-width: 45px; /* Slightly larger buttons */
             padding: 8px 12px; /* Adjust padding */
             border-radius: 6px;
-            transition: background-color 0.2s, border-color 0.2s;
+            transition: all 0.3s ease;
+        }
+        
+        /* 缩放控制按钮 - 暗色主题 */
+        body.dark-theme #zoomControls button {
+            background-color: rgba(80, 80, 80, 0.5); /* Darker button background */
+            color: #f0f0f0; /* Brighter text */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* More visible button border */
+        }
+        
+        /* 缩放控制按钮 - 浅色主题 */
+        body.light-theme #zoomControls button {
+            background-color: rgba(180, 180, 180, 0.5); /* Lighter button background */
+            color: #333; /* Dark text */
+            border: 1px solid rgba(0, 0, 0, 0.2); /* Subtle button border */
         }
 
-        #zoomControls button:hover {
+        /* 缩放控制按钮悬停 - 暗色主题 */
+        body.dark-theme #zoomControls button:hover {
             background-color: rgba(100, 100, 100, 0.6); /* Lighter hover */
             border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* 缩放控制按钮悬停 - 浅色主题 */
+        body.light-theme #zoomControls button:hover {
+            background-color: rgba(160, 160, 160, 0.6); /* Darker hover */
+            border-color: rgba(0, 0, 0, 0.3);
         }
 
          #zoomControls button:active {
@@ -199,19 +361,68 @@
             transform: scale(0.97);
         }
 
-        #closeFullscreenBtn {
+        /* 关闭按钮 - 暗色主题 */
+        body.dark-theme #closeFullscreenBtn {
             background-color: rgba(255, 80, 80, 0.6) !important; /* Brighter, slightly less transparent red */
             border-color: rgba(255, 100, 100, 0.7) !important;
             color: #ffffff !important; /* Ensure text is white */
         }
 
-        #closeFullscreenBtn:hover {
-             background-color: rgba(255, 100, 100, 0.75) !important; /* Brighter red hover */
-             border-color: rgba(255, 120, 120, 0.8) !important;
+        body.dark-theme #closeFullscreenBtn:hover {
+            background-color: rgba(255, 100, 100, 0.75) !important; /* Brighter red hover */
+            border-color: rgba(255, 120, 120, 0.8) !important;
+        }
+        
+        /* 关闭按钮 - 浅色主题 */
+        body.light-theme #closeFullscreenBtn {
+            background-color: rgba(220, 60, 60, 0.7) !important; /* Bright red for light theme */
+            border-color: rgba(200, 40, 40, 0.8) !important;
+            color: #ffffff !important; /* White text */
+        }
+
+        body.light-theme #closeFullscreenBtn:hover {
+            background-color: rgba(240, 80, 80, 0.8) !important; /* Brighter red hover */
+            border-color: rgba(220, 60, 60, 0.9) !important;
+        }
+        
+        /* 主题切换按钮样式 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        #themeToggleBtn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        body.dark-theme #themeToggleBtn {
+            background-color: rgba(60, 60, 60, 0.8);
+            color: #f0f0f0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        body.light-theme #themeToggleBtn {
+            background-color: rgba(240, 240, 240, 0.8);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body>
+<body class="dark-theme">
+    <div class="theme-toggle">
+        <button id="themeToggleBtn" title="切换主题">🌓</button>
+    </div>
     <div class="container">
         <div class="input-section">
             <h2>Mermaid 代码输入</h2>
