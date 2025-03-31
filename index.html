@@ -6,6 +6,16 @@
     <title>Mermaid 转换工具</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <!-- CodeMirror库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/lib/codemirror.css">
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/lib/codemirror.js"></script>
+    <!-- CodeMirror插件 -->
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/mode/simple.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/selection/active-line.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/scroll/simplescrollbars.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.12/addon/scroll/simplescrollbars.css">
+    <!-- 自定义CodeMirror样式 -->
+    <link rel="stylesheet" href="codemirror-custom.css">
     <style>
         * {
             margin: 0;
@@ -205,12 +215,14 @@
     <div class="container">
         <div class="input-section">
             <h2>Mermaid 代码输入</h2>
-            <textarea id="mermaidInput" placeholder="在此输入Mermaid代码...">graph TD
+            <div id="editor-container">
+                <textarea id="mermaidInput" placeholder="在此输入Mermaid代码...">graph TD
     A[开始] --> B{判断}
     B -->|是| C[处理1]
     B -->|否| D[处理2]
     C --> E[结束]
     D --> E</textarea>
+            </div>
             <div class="error-message" id="errorMessage"></div>
         </div>
         <div class="preview-section">

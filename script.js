@@ -14,19 +14,89 @@ mermaid.initialize({
     // }
 });
 
-// 当页面加载完成时渲染初始图表
-document.addEventListener('DOMContentLoaded', () => {
-    renderMermaid();
+// 定义Mermaid语法高亮模式
+CodeMirror.defineSimpleMode("mermaid", {
+    // 开始状态
+    start: [
+        // 注释
+        {regex: /%%.*/, token: "comment"},
+        // 图表类型关键字
+        {regex: /^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitGraph)\b/, token: "keyword"},
+        // 方向关键字
+        {regex: /\b(TB|TD|BT|RL|LR)\b/, token: "keyword"},
+        // 节点定义
+        {regex: /\b([A-Za-z0-9_]+)\b/, token: "def"},
+        // 节点形状
+        {regex: /\[([^\]]*)\]|\(([^\)]*)\)|\{([^\}]*)\}|\>([^\>]*)\]|\[\[([^\]]*)\]\]|\[\(([^\)]*)\)\]|\[\/([^/]*)\/\]|\[\\([^\]]*)\\\]/, token: "string"},
+        // 连接符
+        {regex: /(-\.-|-\.->|===>|-->|==>|-.->|~~\|)/, token: "operator"},
+        // 连接标签
+        {regex: /\|([^|]*)\|/, token: "string"},
+        // 子图
+        {regex: /\b(subgraph|end)\b/, token: "keyword"},
+        // 类图关键字
+        {regex: /\b(class|interface|extends|implements)\b/, token: "keyword"},
+        // 状态图关键字
+        {regex: /\b(state|note|as)\b/, token: "keyword"},
+        // 序列图关键字
+        {regex: /\b(participant|actor|activate|deactivate|note|loop|alt|else|opt|par|and|rect|end)\b/, token: "keyword"},
+        // 甘特图关键字
+        {regex: /\b(title|dateFormat|section|task)\b/, token: "keyword"},
+        // 字符串
+        {regex: /"([^"]*)"|'([^']*)'/,  token: "string"},
+        // 括号
+        {regex: /[\[\]\{\}\(\)]/, token: "bracket"},
+        // 其他操作符
+        {regex: /[:;,]/, token: "operator"}
+    ],
+    meta: {
+        dontIndentStates: ["comment"],
+        lineComment: "%%"
+    }
 });
 
-// 监听输入变化，实时更新预览
-document.getElementById('mermaidInput').addEventListener('input', () => {
+// 创建CodeMirror编辑器实例
+let editor;
+
+// 当页面加载完成时初始化编辑器和渲染初始图表
+document.addEventListener('DOMContentLoaded', () => {
+    // 初始化CodeMirror编辑器
+    const textArea = document.getElementById('mermaidInput');
+    editor = CodeMirror.fromTextArea(textArea, {
+        mode: "mermaid",
+        theme: "mermaid-dark",
+        lineNumbers: true,
+        lineWrapping: true,
+        styleActiveLine: true,
+        scrollbarStyle: "simple",
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        tabSize: 4,
+        indentWithTabs: true,
+        extraKeys: {
+            "Tab": function(cm) {
+                if (cm.somethingSelected()) {
+                    cm.indentSelection("add");
+                } else {
+                    cm.replaceSelection("    ", "end");
+                }
+            }
+        }
+    });
+    
+    // 监听编辑器内容变化，实时更新预览
+    editor.on("change", () => {
+        renderMermaid();
+    });
+    
+    // 渲染初始图表
     renderMermaid();
 });
 
 // 渲染Mermaid图表
 async function renderMermaid() {
-    const input = document.getElementById('mermaidInput').value;
+    // 从CodeMirror编辑器获取内容
+    const input = editor ? editor.getValue() : document.getElementById('mermaidInput').value;
     const preview = document.getElementById('preview');
     const errorMessage = document.getElementById('errorMessage');
 

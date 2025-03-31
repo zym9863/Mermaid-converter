@@ -1,0 +1,82 @@
+/* CodeMirror自定义样式 - 适配暗色主题 */
+.CodeMirror {
+    height: 350px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #f0f0f0;
+    font-family: 'Fira Code', monospace;
+    line-height: 1.6;
+    padding: 10px 0;
+}
+
+.CodeMirror:focus-within {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+/* 行号样式 */
+.CodeMirror-gutters {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding-right: 5px;
+}
+
+.CodeMirror-linenumber {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* 语法高亮样式 - 适配Mermaid语法 */
+.cm-s-mermaid-dark .cm-keyword {
+    color: #ff79c6; /* 关键字，如graph, flowchart */
+}
+
+.cm-s-mermaid-dark .cm-def {
+    color: #50fa7b; /* 定义，如节点ID */
+}
+
+.cm-s-mermaid-dark .cm-variable {
+    color: #8be9fd; /* 变量 */
+}
+
+.cm-s-mermaid-dark .cm-operator {
+    color: #ff79c6; /* 操作符，如--> */
+}
+
+.cm-s-mermaid-dark .cm-string {
+    color: #f1fa8c; /* 字符串 */
+}
+
+.cm-s-mermaid-dark .cm-bracket {
+    color: #f8f8f2; /* 括号 */
+}
+
+.cm-s-mermaid-dark .cm-comment {
+    color: #6272a4; /* 注释 */
+}
+
+.cm-s-mermaid-dark .cm-error {
+    color: #ff5555; /* 错误 */
+}
+
+/* 当前行高亮 */
+.CodeMirror-activeline-background {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 选中文本高亮 */
+.CodeMirror-selected {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 滚动条样式 */
+.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    border: none;
+}
+
+.CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
