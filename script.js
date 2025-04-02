@@ -9,27 +9,6 @@ function initializeMermaid(theme) {
         securityLevel: 'loose'
     };
     
-    // 可选：为深色和浅色主题定义自定义变量
-    if (theme === 'dark') {
-        config.themeVariables = {
-            darkMode: true,
-            background: '#1a1a1a',
-            primaryColor: '#333',
-            primaryTextColor: '#e0e0e0',
-            lineColor: '#aaa',
-            fontSize: '16px'
-        };
-    } else {
-        config.themeVariables = {
-            darkMode: false,
-            background: '#f8f9fa',
-            primaryColor: '#e9ecef',
-            primaryTextColor: '#333',
-            lineColor: '#666',
-            fontSize: '16px'
-        };
-    }
-    
     mermaid.initialize(config);
 }
 
