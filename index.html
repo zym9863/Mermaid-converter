@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mermaid 转换工具</title>
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2a2a2a">
+    <meta name="description" content="一个基于浏览器的 Mermaid 图表实时预览和导出工具">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Mermaid 转换工具">
+    <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- External Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11.5.0/dist/mermaid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <!-- CodeMirror库 -->
@@ -32,13 +43,13 @@
             min-height: 100vh;
             transition: all 0.3s ease;
         }
-        
+
         /* 暗色主题 */
         body.dark-theme {
             background: linear-gradient(to bottom right, #2a2a2a, #1a1a1a); /* Dark gradient background */
             color: #e0e0e0; /* Light text color */
         }
-        
+
         /* 浅色主题 */
         body.light-theme {
             background: linear-gradient(to bottom right, #f0f4f8, #e0e8f0); /* Light gradient background */
@@ -50,7 +61,7 @@
             color: #ffffff;
             margin-bottom: 10px;
         }
-        
+
         /* 标题样式 - 浅色主题 */
         body.light-theme h2 {
             color: #333;
@@ -67,14 +78,14 @@
             -webkit-backdrop-filter: blur(10px); /* Safari support */
             transition: all 0.3s ease;
         }
-        
+
         /* 容器样式 - 暗色主题 */
         body.dark-theme .container {
             background-color: rgba(40, 40, 40, 0.6); /* Semi-transparent dark background */
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Softer shadow */
             border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border */
         }
-        
+
         /* 容器样式 - 浅色主题 */
         body.light-theme .container {
             background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent light background */
@@ -90,16 +101,16 @@
             border-radius: 10px;
             transition: all 0.3s ease;
         }
-        
+
         /* 输入和预览区域 - 暗色主题 */
-        body.dark-theme .input-section, 
+        body.dark-theme .input-section,
         body.dark-theme .preview-section {
             background-color: rgba(50, 50, 50, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         /* 输入和预览区域 - 浅色主题 */
-        body.light-theme .input-section, 
+        body.light-theme .input-section,
         body.light-theme .preview-section {
             background-color: rgba(240, 240, 240, 0.5);
             border: 1px solid rgba(0, 0, 0, 0.05);
@@ -115,14 +126,14 @@
             outline: none; /* Remove default outline */
             transition: all 0.3s ease;
         }
-        
+
         /* 文本区域 - 暗色主题 */
         body.dark-theme textarea {
             border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
             background-color: rgba(0, 0, 0, 0.3); /* Darker transparent background */
             color: #f0f0f0; /* Light text */
         }
-        
+
         /* 文本区域 - 浅色主题 */
         body.light-theme textarea {
             border: 1px solid rgba(0, 0, 0, 0.1); /* Darker border */
@@ -135,7 +146,7 @@
             border-color: rgba(255, 255, 255, 0.5); /* Highlight border on focus */
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
         }
-        
+
         /* 文本区域焦点 - 浅色主题 */
         body.light-theme textarea:focus {
             border-color: rgba(0, 0, 0, 0.3); /* Highlight border on focus */
@@ -152,13 +163,13 @@
             overflow: auto; /* Add scroll if content overflows */
             transition: all 0.3s ease;
         }
-        
+
         /* 预览容器 - 暗色主题 */
         body.dark-theme .preview-container {
             border: 1px solid rgba(255, 255, 255, 0.2);
             background-color: rgba(0, 0, 0, 0.2); /* Slightly transparent background */
         }
-        
+
         /* 预览容器 - 浅色主题 */
         body.light-theme .preview-container {
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -188,14 +199,14 @@
             -webkit-backdrop-filter: blur(5px);
             font-weight: 500; /* Slightly bolder text */
         }
-        
+
         /* 按钮 - 暗色主题 */
         body.dark-theme button {
             border: 1px solid rgba(255, 255, 255, 0.2);
             background-color: rgba(255, 255, 255, 0.1); /* Glassy background */
             color: #e0e0e0; /* Light text */
         }
-        
+
         /* 按钮 - 浅色主题 */
         body.light-theme button {
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -208,7 +219,7 @@
             background-color: rgba(255, 255, 255, 0.2); /* Lighter on hover */
             border-color: rgba(255, 255, 255, 0.4);
         }
-        
+
         /* 按钮悬停 - 浅色主题 */
         body.light-theme button:hover {
             background-color: rgba(0, 0, 0, 0.1); /* Darker on hover */
@@ -233,14 +244,14 @@
             outline: none;
             transition: all 0.3s ease;
         }
-        
+
         /* 文本输入 - 暗色主题 */
         body.dark-theme input[type="text"] {
             border: 1px solid rgba(255, 255, 255, 0.2);
             background-color: rgba(0, 0, 0, 0.3);
             color: #f0f0f0;
         }
-        
+
         /* 文本输入 - 浅色主题 */
         body.light-theme input[type="text"] {
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -253,7 +264,7 @@
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
         }
-        
+
         /* 文本输入焦点 - 浅色主题 */
         body.light-theme input[type="text"]:focus {
             border-color: rgba(0, 0, 0, 0.3);
@@ -269,14 +280,14 @@
             display: none; /* Keep hidden initially */
             transition: all 0.3s ease;
         }
-        
+
         /* 错误消息 - 暗色主题 */
         body.dark-theme .error-message {
             color: #ff6b6b; /* Brighter red for dark theme */
             background-color: rgba(255, 107, 107, 0.1); /* Subtle red background */
             border: 1px solid rgba(255, 107, 107, 0.3);
         }
-        
+
         /* 错误消息 - 浅色主题 */
         body.light-theme .error-message {
             color: #d73a49; /* Darker red for light theme */
@@ -290,12 +301,12 @@
             -webkit-backdrop-filter: blur(5px);
             transition: background-color 0.3s ease;
         }
-        
+
         /* 全屏预览 - 暗色主题 */
         body.dark-theme #fullscreenPreview {
             background-color: rgba(10, 10, 10, 0.95); /* Darker overlay */
         }
-        
+
         /* 全屏预览 - 浅色主题 */
         body.light-theme #fullscreenPreview {
             background-color: rgba(240, 240, 240, 0.95); /* Lighter overlay */
@@ -308,14 +319,14 @@
             -webkit-backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
-        
+
         /* 缩放控制 - 暗色主题 */
         body.dark-theme #zoomControls {
             background-color: rgba(60, 60, 60, 0.75); /* Slightly adjusted background for better contrast */
             border: 1px solid rgba(255, 255, 255, 0.25); /* More visible border */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
         }
-        
+
         /* 缩放控制 - 浅色主题 */
         body.light-theme #zoomControls {
             background-color: rgba(220, 220, 220, 0.75); /* Light background */
@@ -329,14 +340,14 @@
             border-radius: 6px;
             transition: all 0.3s ease;
         }
-        
+
         /* 缩放控制按钮 - 暗色主题 */
         body.dark-theme #zoomControls button {
             background-color: rgba(80, 80, 80, 0.5); /* Darker button background */
             color: #f0f0f0; /* Brighter text */
             border: 1px solid rgba(255, 255, 255, 0.3); /* More visible button border */
         }
-        
+
         /* 缩放控制按钮 - 浅色主题 */
         body.light-theme #zoomControls button {
             background-color: rgba(180, 180, 180, 0.5); /* Lighter button background */
@@ -349,7 +360,7 @@
             background-color: rgba(100, 100, 100, 0.6); /* Lighter hover */
             border-color: rgba(255, 255, 255, 0.4);
         }
-        
+
         /* 缩放控制按钮悬停 - 浅色主题 */
         body.light-theme #zoomControls button:hover {
             background-color: rgba(160, 160, 160, 0.6); /* Darker hover */
@@ -372,7 +383,7 @@
             background-color: rgba(255, 100, 100, 0.75) !important; /* Brighter red hover */
             border-color: rgba(255, 120, 120, 0.8) !important;
         }
-        
+
         /* 关闭按钮 - 浅色主题 */
         body.light-theme #closeFullscreenBtn {
             background-color: rgba(220, 60, 60, 0.7) !important; /* Bright red for light theme */
@@ -384,7 +395,7 @@
             background-color: rgba(240, 80, 80, 0.8) !important; /* Brighter red hover */
             border-color: rgba(220, 60, 60, 0.9) !important;
         }
-        
+
         /* 主题切换按钮样式 */
         .theme-toggle {
             position: fixed;
@@ -392,7 +403,7 @@
             right: 20px;
             z-index: 100;
         }
-        
+
         #themeToggleBtn {
             width: 40px;
             height: 40px;
@@ -405,13 +416,13 @@
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-        
+
         body.dark-theme #themeToggleBtn {
             background-color: rgba(60, 60, 60, 0.8);
             color: #f0f0f0;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         body.light-theme #themeToggleBtn {
             background-color: rgba(240, 240, 240, 0.8);
             color: #333;
@@ -463,5 +474,7 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- PWA Support -->
+    <script src="pwa.js"></script>
 </body>
 </html>
