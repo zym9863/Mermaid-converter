@@ -182,7 +182,6 @@
              height: auto;
         }
 
-
         .button-group {
             display: flex;
             flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
@@ -438,12 +437,43 @@
         <div class="input-section">
             <h2>Mermaid 代码输入</h2>
             <div id="editor-container">
-                <textarea id="mermaidInput" placeholder="在此输入Mermaid代码...">graph TD
-    A[开始] --> B{判断}
-    B -->|是| C[处理1]
-    B -->|否| D[处理2]
-    C --> E[结束]
-    D --> E</textarea>
+                <textarea id="mermaidInput" placeholder="在此输入Mermaid代码...">%%{init: {'theme':'base', 'themeVariables': {'primaryColor': '#ff6b6b', 'primaryTextColor': '#fff', 'primaryBorderColor': '#ff5252', 'lineColor': '#4fc3f7', 'sectionBkgColor': '#e8f5e8', 'altSectionBkgColor': '#f3e5f5', 'gridColor': '#e0e0e0', 'secondaryColor': '#4caf50', 'tertiaryColor': '#ffeb3b'}}}%%
+graph TB
+    %% 用户体验设计流程
+    Start([🚀 项目启动]) --> Research[📊 用户研究]
+    Research --> Persona[👤 用户画像]
+    Persona --> Journey[🗺️ 用户旅程图]
+    
+    Journey --> Wireframe[📝 线框图设计]
+    Wireframe --> Prototype[🎨 原型设计]
+    Prototype --> Test{🧪 可用性测试}
+    
+    Test -->|通过| Design[✨ 视觉设计]
+    Test -->|失败| Iterate[🔄 迭代优化]
+    Iterate --> Wireframe
+    
+    Design --> Dev[👨‍💻 前端开发]
+    Dev --> QA[🔍 质量检测]
+    QA -->|发现问题| Bug[🐛 修复Bug]
+    Bug --> QA
+    QA -->|无问题| Deploy[🚀 产品发布]
+    
+    Deploy --> Analytics[📈 数据分析]
+    Analytics --> Feedback[💬 用户反馈]
+    Feedback --> Research
+    
+    %% 样式定义
+    classDef startEnd fill:#ff6b6b,stroke:#ff5252,stroke-width:3px,color:#fff
+    classDef process fill:#4caf50,stroke:#2e7d32,stroke-width:2px,color:#fff
+    classDef decision fill:#ff9800,stroke:#f57c00,stroke-width:2px,color:#fff
+    classDef design fill:#9c27b0,stroke:#7b1fa2,stroke-width:2px,color:#fff
+    classDef tech fill:#2196f3,stroke:#1976d2,stroke-width:2px,color:#fff
+    
+    class Start,Deploy startEnd
+    class Research,Persona,Journey,Analytics,Feedback process
+    class Test decision
+    class Wireframe,Prototype,Design,Iterate design
+    class Dev,QA,Bug tech</textarea>
             </div>
             <div class="error-message" id="errorMessage"></div>
         </div>
